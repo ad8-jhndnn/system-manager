@@ -194,12 +194,14 @@ const useKitStore = create<AppState>()(
       set((s) => {
         s.flows[flowId].name = newName;
         s.flows[flowId].fullName = `${s.flows[flowId].parent}.${newName}`;
+        UpdateFlowChoices(s.flows);
         s.nodes = getNodes(s.flows);
       }),
     addTag: (flowId: string, tag: string) =>
       set((s) => {
         if (!s.flows[flowId].tags.includes(tag)) {
           s.flows[flowId].tags.push(tag);
+          UpdateFlowChoices(s.flows);
           s.nodes = getNodes(s.flows);
           s.edges = getEdges(s.flows);
         }
@@ -207,6 +209,7 @@ const useKitStore = create<AppState>()(
     removeTag: (flowId: string, tag: string) =>
       set((s) => {
         s.flows[flowId].tags = s.flows[flowId].tags.filter(t => t !== tag);
+        UpdateFlowChoices(s.flows);
         s.nodes = getNodes(s.flows);
         s.edges = getEdges(s.flows);
       }),
