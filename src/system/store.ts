@@ -49,7 +49,7 @@ function CreateItems(info: AddItemInfo, s: AppState) {
         parent: newItem.name
       };
       newFlow.fullName = `${newItem.name}.${newFlow.name}`;
-      if(info.initialTag.trim() !== '') newFlow.tags.push(info.initialTag.trim());
+      if (info.initialTag.trim() !== '') newFlow.tags.push(info.initialTag.trim());
       newItem.flowIds.push(newFlow.id);
       newFlows[newFlow.id] = newFlow;
     }
@@ -67,7 +67,7 @@ function CreateItems(info: AddItemInfo, s: AppState) {
         parent: newItem.name
       };
       newFlow.fullName = `${newItem.name}.${newFlow.name}`;
-      if(info.initialTag.trim() !== '') newFlow.tags.push(info.initialTag.trim());
+      if (info.initialTag.trim() !== '') newFlow.tags.push(info.initialTag.trim());
       newItem.flowIds.push(newFlow.id);
       newFlows[newFlow.id] = newFlow;
     }
@@ -138,6 +138,8 @@ export type AppState = {
   onConnect: OnConnect;
   setNodes: (nodes: AppNode[]) => void;
   setEdges: (edges: Edge[]) => void;
+  isVertical: boolean;
+  setIsVertical: (isVertical: boolean) => void;
   //
   items: Item[];
   flows: { [key: string]: Flow };
@@ -213,6 +215,13 @@ const useKitStore = create<AppState>()(
         s.nodes = getNodes(s.flows);
         s.edges = getEdges(s.flows);
       }),
+    isVertical: true,
+    setIsVertical: (isVertical: boolean) =>
+      set((s) => {
+        s.isVertical = isVertical;
+        s.nodes = getNodes(s.flows);
+        s.edges = getEdges(s.flows);
+      })
   })));
 
 export default useKitStore;
