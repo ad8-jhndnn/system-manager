@@ -20,6 +20,7 @@ export interface AddItemInfo {
   inputCount: number
   outputCount: number
   itemCount: number
+  initialTag: string
 }
 
 let idCounter = 0;
@@ -42,12 +43,13 @@ function CreateItems(info: AddItemInfo, s: AppState) {
         direction: FlowDirection.Source,
         routeId: "<none>",
         routeChoices: [],
-        tags: [],
+        tags: [] as string[],
         fullName: "",
         id: `${name}-input-${idCounter++}-id`,
         parent: newItem.name
       };
       newFlow.fullName = `${newItem.name}.${newFlow.name}`;
+      if(info.initialTag.trim() !== '') newFlow.tags.push(info.initialTag.trim());
       newItem.flowIds.push(newFlow.id);
       newFlows[newFlow.id] = newFlow;
     }
@@ -59,12 +61,13 @@ function CreateItems(info: AddItemInfo, s: AppState) {
         direction: FlowDirection.Sink,
         routeId: "<none>",
         routeChoices: [],
-        tags: [],
+        tags: [] as string[],
         fullName: "",
         id: `${name}-output-${idCounter++}-id`,
         parent: newItem.name
       };
       newFlow.fullName = `${newItem.name}.${newFlow.name}`;
+      if(info.initialTag.trim() !== '') newFlow.tags.push(info.initialTag.trim());
       newItem.flowIds.push(newFlow.id);
       newFlows[newFlow.id] = newFlow;
     }

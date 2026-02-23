@@ -11,6 +11,7 @@ export default function SourceFlow({ flow, flowId }: { flow: Flow, flowId: strin
 
   return <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
     <TextField
-       label={flow.label}
-       value={flow.name} onChange={handleChange} size="small" />
-       </FormControl>}
+      label={flow.label}
+      value={flow.name} onChange={handleChange} size="small" />
+  </FormControl>
+}

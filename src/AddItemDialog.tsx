@@ -17,7 +17,8 @@ export default function AddItemDialog({ onClose }: { onClose: (results: AddItemI
     name: '',
     inputCount: 1,
     outputCount: 1,
-    itemCount: 1
+    itemCount: 1,
+    initialTag: ''
   });
 
   function setInputCount(value: number | null) {
@@ -69,6 +70,16 @@ export default function AddItemDialog({ onClose }: { onClose: (results: AddItemI
             value={results.itemCount}
             onValueChange={(value: number | null) => setItemCount(value)}
             size="medium" />
+
+          <TextField
+            required
+            id="tag-field"
+            label="Initial Tag (optional)"
+            value={results.initialTag}
+            onChange={(e) => setResults(prev => ({ ...prev, initialTag: e.target.value }))}
+            variant="outlined"
+          />
+
 
           <Button onClick={() => {
             onClose(results);
