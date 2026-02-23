@@ -6,6 +6,8 @@ import Grid from "@mui/material/Grid";
 import SourceFlow from "./SourceFlow";
 import SinkFlow from "./SinkFlow";
 import useKitStore from "./system/store";
+import TagComponent from "./TagComponent";
+import { Stack } from "@mui/material";
 
 export default function RouteList({ items }: { items: Item[] }) {
 
@@ -18,12 +20,15 @@ export default function RouteList({ items }: { items: Item[] }) {
           <div>{item.name}</div>
           <List>
             {Object.keys(flows).filter(flowId => item.flowIds.includes(flowId)).map((flowId, flowIndex) => {
-              const flow = flows[flowId]; 
+              const flow = flows[flowId];
               return <ListItem key={`${index}-${flowId}`}
-               sx={{ margin: '1px', padding: '1px' }}>
-                {flow.direction === FlowDirection.Source ? 
-                <SourceFlow flow={flow} flowId={flowId} /> : 
-                <SinkFlow flow={flow} flowId={flowId} />}
+                sx={{ margin: '1px', padding: '2px' }}>
+                <Stack direction="row" spacing={2} alignItems="center" margin={1}>
+                  {flow.direction === FlowDirection.Source ?
+                    <SourceFlow flow={flow} flowId={flowId} /> :
+                    <SinkFlow flow={flow} flowId={flowId} />}
+                  <TagComponent flow={flow} flowId={flowId} />
+                </Stack>
               </ListItem>
             })}
           </List>

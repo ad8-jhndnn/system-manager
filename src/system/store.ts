@@ -94,12 +94,6 @@ function UpdateFlowChoices(flows: FlowMap): FlowMap {
   return { ...sourceFlows, ...sinkFlows };
 }
 
-// function UpdateFlowRoute(flows: FlowMap, flowId: string, routeId: string): FlowMap {
-//   const updatedFlows = { ...flows };
-//   updatedFlows[flowId] = { ...updatedFlows[flowId], routeId };
-//   return updatedFlows;
-// }
-
 function getNodes(flows: FlowMap): AppNode[] {
   return Object.keys(flows).map((id, index) => ({
     id: id,
@@ -133,7 +127,6 @@ function getEdges(flows: FlowMap): Edge[] {
   return edges;
 }
 
-
 export type AppState = {
   nodes: AppNode[];
   edges: Edge[];
@@ -148,6 +141,8 @@ export type AppState = {
   addItem: (info: AddItemInfo) => void;
   updateFlowName: (flowId: string, newName: string) => void;
   updateFlowRoute: (flowId: string, routeId: string) => void;
+  addTag: (flowId: string, tag: string) => void;
+  removeTag: (flowId: string, tag: string) => void;
 };
 
 const initialNodes: AppNode[] = [];
@@ -192,12 +187,26 @@ const useKitStore = create<AppState>()(
         s.flows[flowId].routeId = routeId;
         s.edges = getEdges(s.flows);
       }),
-      updateFlowName: (flowId: string, newName: string) =>
+    updateFlowName: (flowId: string, newName: string) =>
       set((s) => {
         s.flows[flowId].name = newName;
         s.flows[flowId].fullName = `${s.flows[flowId].parent}.${newName}`;
         s.nodes = getNodes(s.flows);
-       })
+      }),
+    addTag: (flowId: string, tag: string) =>
+      set((s) => {
+        if (!s.flows[flowId].tags.includes(tag)) {
+          s.flows[flowId].tags.push(tag);
+          s.nodes = getNodes(s.flows);
+          s.edges = getEdges(s.flows);
+        }
+      }),
+    removeTag: (flowId: string, tag: string) =>
+      set((s) => {
+        s.flows[flowId].tags = s.flows[flowId].tags.filter(t => t !== tag);
+        s.nodes = getNodes(s.flows);
+        s.edges = getEdges(s.flows);
+      }),
   })));
 
 export default useKitStore;
