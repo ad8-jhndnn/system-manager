@@ -22,8 +22,8 @@ export default function RouteList({ items }: { items: Item[] }) {
             {Object.keys(flows).filter(flowId => item.flowIds.includes(flowId)).map((flowId, flowIndex) => {
               const flow = flows[flowId];
               return <ListItem key={`${index}-${flowId}`}
-                sx={{ margin: '1px', padding: '2px' }}>
-                <Stack direction="row" spacing={2} alignItems="center" margin={1}>
+                sx={{ margin: '0px', padding: '0px' }}>
+                <Stack direction="row" spacing={3} alignItems="center" margin={1}>
                   {flow.direction === FlowDirection.Source ?
                     <SourceFlow flow={flow} flowId={flowId} /> :
                     <SinkFlow flow={flow} flowId={flowId} />}

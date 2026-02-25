@@ -16,8 +16,8 @@ const selector = (state:AppState) => ({
 function KitView() {
   const { items, addItem } = useStore(useShallow(selector));
   return (
-    <Grid container width={'100%'} height={'100%'} bgcolor={"lightgray"}>
-      <Grid size={2} border={'1px solid dimgray'}>
+    <Grid container width={'100%'} height={'100%'} bgcolor={"lightgray"} sx={{ borderboxSizing: 'border-box' }}>
+      <Grid sx={{ height: '100%', boxSizing: 'border-box', overflow: 'auto' }} size={2}>
         <Stack sx={{ height: '100%', boxSizing: 'border-box', overflow: 'auto' }} spacing={0}>
           <AddItemDialog onClose={(results: AddItemInfo) => { addItem(results) }} />
           <ItemsList items={items} />

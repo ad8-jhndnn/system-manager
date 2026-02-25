@@ -48,7 +48,7 @@ export default function FlowView() {
 
   useLayoutNodes(layoutOptions);
 
-  return (<div style={{ width: '100%', height: '100%', backgroundColor: 'lightgray', border: '1px solid dimgray' }}>
+  return (<div style={{ width: '100%', height: '100%', backgroundColor: 'lightgray', border: '1px solid dimgray', boxSizing: 'border-box' }}>
     <ReactFlow
       nodesDraggable={false}
       nodesConnectable={false}
